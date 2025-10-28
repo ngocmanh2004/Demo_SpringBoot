@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="header">
+<button class="btn-back" (click)="goBack()">⬅ Quay lại</button>
+    <h2>Danh sách người dùng</h2>
+    <button class="btn btn-primary" (click)="addUser()">+ Thêm mới</button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tên đăng nhập</th>
+        <th>Họ tên</th>
+        <th>Email</th>
+        <th>Số điện thoại</th>
+        <th>Vai trò</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of users">
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.fullName }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.phone }}</td>
+        <td>{{ u.roleId === 1 ? 'ADMIN' : (u.roleId === 2 ? 'LANDLORD' : 'TENANT') }}</td>
+        <td>
+          <button class="btn btn-edit" (click)="editUser(u.id!)">Sửa</button>
+          <button class="btn btn-delete" (click)="deleteUser(u.id!)">Xóa</button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

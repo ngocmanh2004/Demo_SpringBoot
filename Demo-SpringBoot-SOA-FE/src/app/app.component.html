@@ -1,0 +1,26 @@
+<div *ngIf="isHomePage()" class="home">
+  <h1 class="title">Demo Spring Boot SOA - Angular Frontend</h1>
+  <p class="subtitle">Chọn dịch vụ để truy cập hệ thống CRUD</p>
+
+  <div class="service-grid">
+    <div class="card" [routerLink]="['/users']">
+      <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="User Service">
+      <h3>User Service</h3>
+      <p>Quản lý thông tin người dùng</p>
+    </div>
+
+    <div class="card" [routerLink]="['/rooms']">
+      <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Room Service">
+      <h3>Room Service</h3>
+      <p>Quản lý phòng trọ</p>
+    </div>
+
+    <div class="card" [routerLink]="['/reviews']">
+      <img src="https://cdn-icons-png.flaticon.com/512/565/565655.png" alt="Review Service">
+      <h3>Review Service</h3>
+      <p>Đánh giá và phản hồi</p>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
