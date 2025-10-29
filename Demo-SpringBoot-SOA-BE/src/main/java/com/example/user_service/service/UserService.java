@@ -3,40 +3,46 @@ package com.example.user_service.service;
 import com.example.user_service.entity.User;
 import com.example.user_service.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
-    private final UserRepository repo;
 
-    public UserService(UserRepository repo) {
-        this.repo = repo;
+    private final UserRepository repository;
+
+    public UserService(UserRepository repository) {
+        this.repository = repository;
     }
 
     public List<User> getAll() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     public User getById(Long id) {
-        return repo.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     public User create(User user) {
-        return repo.save(user);
+        return repository.save(user);
     }
 
-    public User update(Long id, User newData) {
-        User u = repo.findById(id).orElse(null);
-        if (u != null) {
-            u.setFullName(newData.getFullName());
-            u.setEmail(newData.getEmail());
-            u.setPhone(newData.getPhone());
-            return repo.save(u);
+    public User update(Long id, User user) {
+        Optional<User> existing = repository.findById(id);
+        if (existing.isPresent()) {
+            user.setId(id);
+            return repository.save(user);
         }
         return null;
     }
 
     public void delete(Long id) {
-        repo.deleteById(id);
+        repository.deleteById(id);
+    }
+
+    // ✅ Thêm hàm login support
+    public User findByUsername(String username) {
+        return repository.findByUsername(username).orElse(null);
     }
 }

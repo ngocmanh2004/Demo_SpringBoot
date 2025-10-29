@@ -40,4 +40,24 @@ public class UserController {
         service.delete(id);
     }
 
+    @PostMapping("/login")
+    public User login(@RequestBody User loginRequest) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+
+        // Lấy user theo username
+        User user = service.findByUsername(username);
+
+        if (user == null) {
+            throw new RuntimeException("Tài khoản không tồn tại!");
+        }
+
+        // Kiểm tra mật khẩu (chưa mã hóa)
+        if (!user.getPassword().equals(password)) {
+            throw new RuntimeException("Sai mật khẩu!");
+        }
+
+        return user;
+    }
+
 }
