@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h3>{{ isEdit ? 'Cập nhật phòng' : 'Thêm phòng mới' }}</h3>
+
+  <form (ngSubmit)="saveRoom()">
+    <div class="mb-3">
+      <label class="form-label">Tòa</label>
+      <input [(ngModel)]="room.buildingId" name="buildingId" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Tên phòng</label>
+      <input [(ngModel)]="room.name" name="name" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Giá (VNĐ)</label>
+      <input [(ngModel)]="room.price" name="price" type="number" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Diện tích (m²)</label>
+      <input [(ngModel)]="room.area" name="area" type="number" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Trạng thái</label>
+      <select [(ngModel)]="room.status" name="status" class="form-select">
+        <option value="AVAILABLE">Trống</option>
+        <option value="OCCUPIED">Đã thuê</option>
+        <option value="REPAIRING">Đang sửa</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Mô tả</label>
+      <textarea [(ngModel)]="room.description" name="description" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <button type="button" (click)="cancel()" class="btn btn-secondary ms-2">Hủy</button>
+  </form>
+</div>

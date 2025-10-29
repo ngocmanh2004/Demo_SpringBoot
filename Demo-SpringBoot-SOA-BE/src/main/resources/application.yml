@@ -1,16 +1,14 @@
 server:
-  port: 8081
+  port: 8081  # mặc định cho user-service
 
 spring:
   application:
-    name: user-service
-
+    name: demo-soa
   datasource:
     url: jdbc:mysql://localhost:3307/user_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
-    password: 040904
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -18,3 +16,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+
+services:
+  user:
+    port: 8081
+    db: user_db
+  room:
+    port: 8082
+    db: room_db
