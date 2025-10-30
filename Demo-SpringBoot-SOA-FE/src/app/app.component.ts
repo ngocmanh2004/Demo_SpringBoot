@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(private router: Router) {}
 
 isHomePage(): boolean {
-  return this.router.url === '/' || this.router.url === '';
+  return this.router.url === '/home' ;
 }
 
 }

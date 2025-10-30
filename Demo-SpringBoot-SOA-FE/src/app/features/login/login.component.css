@@ -1,0 +1,90 @@
+/* -------- Nền & khung chính -------- */
+body {
+  background: linear-gradient(135deg, #007bff, #6f42c1);
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+}
+
+.auth-container {
+  background: #ffffff;
+  padding: 40px 35px;
+  border-radius: 16px;
+  max-width: 420px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.5s ease;
+}
+
+/* -------- Tiêu đề -------- */
+h3 {
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+
+/* -------- Input -------- */
+.auth-form .form-label {
+  font-weight: 500;
+  color: #555;
+}
+
+.auth-form .form-control {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.auth-form .form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+  outline: none;
+}
+
+/* -------- Nút -------- */
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 10px 0;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #007bff, #6f42c1);
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(111, 66, 193, 0.3);
+}
+
+/* -------- Liên kết đăng ký / đăng nhập -------- */
+.switch-link {
+  font-size: 14px;
+  color: #666;
+}
+
+.switch-link a {
+  color: #007bff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.switch-link a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* -------- Hiệu ứng mượt -------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

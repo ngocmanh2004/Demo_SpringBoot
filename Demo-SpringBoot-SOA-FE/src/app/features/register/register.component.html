@@ -1,0 +1,22 @@
+<div class="container auth-container mt-5">
+  <h3 class="text-center mb-4">Đăng ký tài khoản</h3>
+
+  <form (ngSubmit)="register()" class="auth-form">
+    <div class="mb-3">
+      <label class="form-label">Tên đăng nhập</label>
+      <input [(ngModel)]="user.username" name="username" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Mật khẩu</label>
+      <input type="password" [(ngModel)]="user.password" name="password" class="form-control" required />
+    </div>
+
+    <button class="btn btn-primary w-100">Đăng ký</button>
+
+    <!-- ✅ Nút quay lại đăng nhập -->
+    <div class="switch-link mt-3 text-center">
+      Đã có tài khoản? <a routerLink="/login">Đăng nhập</a>
+    </div>
+  </form>
+</div>
