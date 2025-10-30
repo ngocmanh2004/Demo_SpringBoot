@@ -2,35 +2,43 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+export interface Review {
+  id?: number;
+  roomId: number;
+  userId: number;         
+  rating: number;
+  comment: string;
+  createdAt?: string;
+  username?: string;
+}
+
+@Injectable({ providedIn: 'root' })
 export class ReviewService {
-  private apiUrl = 'http://localhost:8083/api/reviews'; // backend review-service
+  private apiUrl = 'http://localhost:8083/api/reviews';
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getAllReviews(): Observable<Review[]> {
+    return this.http.get<Review[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  getAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:8081/api/users');  
   }
 
-  getByRoomId(roomId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/room/${roomId}`);
+  getAllRooms(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:8082/api/rooms');  
   }
 
-  create(review: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, review);
+  createReview(review: Review): Observable<Review> {
+    return this.http.post<Review>(this.apiUrl, review);
   }
 
-  update(id: number, review: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, review);
+  updateReview(id: number, review: Review): Observable<Review> {
+    return this.http.put<Review>(`${this.apiUrl}/${id}`, review);
   }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  deleteReview(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

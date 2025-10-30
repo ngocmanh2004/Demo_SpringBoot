@@ -1,68 +1,73 @@
-.main-container {
+.home {
   text-align: center;
-  padding: 60px 20px;
-  min-height: 100vh;
-  background: linear-gradient(to bottom right, #f9fbff, #eef2ff);
-  font-family: "Poppins", sans-serif;
+  margin-top: 50px;
+  padding: 20px;
 }
 
-h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #004aad;
-  margin-bottom: 10px;
+.title {
+  color: #003366;
+  font-size: 28px;
+  font-weight: 700;
 }
 
 .subtitle {
-  font-size: 1rem;
   color: #555;
+  font-size: 16px;
   margin-bottom: 40px;
 }
 
+/* ✅ Hiển thị 3 card trên 1 hàng */
 .service-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
-  max-width: 950px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 40px;
+  flex-wrap: nowrap; /* Không xuống hàng */
 }
 
+/* Card dịch vụ */
 .card {
   background: #fff;
-  padding: 25px 20px;
   border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  padding: 25px 20px;
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* Ảnh icon */
 .card img {
-  width: 75px;
-  height: 75px;
+  width: 85px;
+  height: 85px;
   margin-bottom: 15px;
 }
 
+/* Tiêu đề và mô tả */
 .card h3 {
-  color: #007bff;
-  font-size: 1.2rem;
+  font-size: 18px;
+  color: #0d6efd;
+  font-weight: 600;
   margin-bottom: 8px;
 }
 
 .card p {
-  font-size: 0.95rem;
-  color: #555;
-}
-.card {
-  cursor: pointer;
-  transition: all 0.3s ease;
+  font-size: 14px;
+  color: #666;
 }
 
-.card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+/* Responsive: khi màn nhỏ hơn 900px thì cho xuống hàng */
+@media (max-width: 900px) {
+  .service-grid {
+    flex-wrap: wrap;
+  }
+
+  .card {
+    width: 260px;
+  }
 }

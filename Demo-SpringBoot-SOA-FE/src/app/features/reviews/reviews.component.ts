@@ -1,55 +1,103 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ReviewService } from '../../shared/services/review.service';
-import { AuthService } from '../../shared/services/auth.service';
+import { RouterModule } from '@angular/router';
+import { Location } from '@angular/common';
+import { ReviewService, Review } from '../../shared/services/review.service';
 
 @Component({
   selector: 'app-reviews',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgFor, NgIf],
   templateUrl: './reviews.component.html',
-  styleUrls: ['./reviews.component.css']
+  styleUrls: ['./reviews.component.css'],
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class ReviewsComponent implements OnInit {
-  reviews: any[] = [];
-  newComment = '';
-  currentUser: any;
+  private reviewApi = inject(ReviewService);
+  private location = inject(Location);
 
-  constructor(private service: ReviewService, private auth: AuthService) {}
+  reviews: Review[] = [];
+  users: any[] = [];
+  rooms: any[] = [];
+
+  selectedUserId: number | null = null;
+  selectedRoomId: number | null = null;
+  rating = 5;
+  comment = '';
+  editingReviewId: number | null = null;
 
   ngOnInit(): void {
-    this.currentUser = this.auth.getLoggedInUser();
-    this.loadReviews();
+    this.loadData();
   }
 
-  loadReviews() {
-    this.service.getAll().subscribe({
-      next: (data) => (this.reviews = data),
-      error: () => alert('Không thể tải danh sách đánh giá!')
-    });
-  }
+  loadData() {
+  this.reviewApi.getAllReviews().subscribe(reviews => {
+    this.reviews = reviews.map(r => ({
+      ...r,
+      username: this.users.find(u => u.id === r.userId)?.username || `#${r.userId}`
+    }));
+  });
 
-  addReview() {
-    if (!this.currentUser) {
-      alert('Bạn phải đăng nhập mới có thể đánh giá!');
+  this.reviewApi.getAllUsers().subscribe(users => this.users = users);
+  this.reviewApi.getAllRooms().subscribe(rooms => this.rooms = rooms);
+}
+
+  goBack() { this.location.back(); }  
+
+  submitReview() {
+    const userId = this.selectedUserId != null ? Number(this.selectedUserId) : null;
+    const roomId = this.selectedRoomId != null ? Number(this.selectedRoomId) : null;
+
+    if (!userId || !roomId || !this.comment.trim()) {
+      alert('Vui lòng chọn người dùng, phòng và nhập nội dung đánh giá.');
       return;
     }
 
-    const review = {
-      userId: this.currentUser.id,
-      roomId: 1, // hoặc lấy từ route/biến context nếu có
-      rating: 5,
-      comment: this.newComment,
-      createdAt: new Date()
+    const payload: Review = {
+      userId,                 // 👈 GỬI userId đúng chuẩn
+      roomId,
+      rating: Number(this.rating),
+      comment: this.comment.trim()
     };
 
-    this.service.create(review).subscribe({
+    const call$ = this.editingReviewId
+      ? this.reviewApi.updateReview(this.editingReviewId, payload)
+      : this.reviewApi.createReview(payload);
+
+    call$.subscribe({
       next: () => {
-        this.newComment = '';
-        this.loadReviews();
+        this.resetForm();
+        this.loadData();
       },
-      error: () => alert('Lỗi khi gửi đánh giá!')
+      error: (e) => {
+        console.error(e);
+        alert('Gửi/cập nhật đánh giá thất bại. Kiểm tra backend.');
+      }
     });
+  }
+
+  editReview(r: Review) {
+    this.editingReviewId = r.id!;
+    this.selectedUserId = r.userId;
+    this.selectedRoomId = r.roomId;
+    this.rating = r.rating;
+    this.comment = r.comment;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  deleteReview(id: number) {
+    if (!confirm('Xóa đánh giá này?')) return;
+    this.reviewApi.deleteReview(id).subscribe({
+      next: () => this.loadData(),
+      error: (e) => { console.error(e); alert('Xóa thất bại.'); }
+    });
+  }
+
+  resetForm() {
+    this.editingReviewId = null;
+    this.selectedUserId = null;
+    this.selectedRoomId = null;
+    this.rating = 5;
+    this.comment = '';
   }
 }

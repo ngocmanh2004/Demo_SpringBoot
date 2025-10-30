@@ -1,31 +1,65 @@
-<div class="container mt-4">
-  <h3 class="text-center mb-4">Đánh giá phòng</h3>
+<div class="review-container">
+  <h3 class="text-center mb-4">⭐ Đánh giá phòng</h3>
 
-  <div *ngIf="currentUser; else loginWarning">
-    <div class="input-group mb-3">
-      <input
-        [(ngModel)]="newComment"
-        name="comment"
-        class="form-control"
-        placeholder="Nhập đánh giá của bạn..."
-      />
-      <button (click)="addReview()" class="btn btn-primary">Gửi</button>
+  <button class="btn-back" (click)="goBack()">⬅ Quay lại</button>
+
+  <!-- Form đánh giá -->
+  <div class="card review-form mb-5">
+    <div class="review-form-row">
+      <div class="form-group">
+        <label>Người dùng</label>
+        <select [(ngModel)]="selectedUserId" class="form-select">
+          <option [ngValue]="null">-- Chọn người dùng --</option>
+          <option *ngFor="let u of users" [ngValue]="u.id">{{ u.username }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Phòng</label>
+        <select [(ngModel)]="selectedRoomId" class="form-select">
+          <option [ngValue]="null">-- Chọn phòng --</option>
+          <option *ngFor="let r of rooms" [ngValue]="r.id">{{ r.name }}</option>
+        </select>
+      </div>
+
+      <div class="form-group small-select">
+        <label>Số sao</label>
+        <select [(ngModel)]="rating" class="form-select">
+          <option *ngFor="let s of [1,2,3,4,5]" [ngValue]="s">{{ s }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="review-form-row">
+      <div class="form-group flex-grow">
+        <label>Đánh giá</label>
+        <textarea [(ngModel)]="comment" rows="3" class="form-control review-input" placeholder="Nhập nhận xét chi tiết..."></textarea>
+      </div>
+    </div>
+
+    <div class="text-end mt-3">
+      <button class="btn btn-primary px-4" (click)="submitReview()">
+        {{ editingReviewId ? 'Cập nhật' : 'Gửi đánh giá' }}
+      </button>
+      <button class="btn btn-outline-secondary ms-2 px-4" (click)="resetForm()">Làm mới</button>
     </div>
   </div>
 
-  <ng-template #loginWarning>
-    <div class="alert alert-warning text-center">
-      ⚠️ Bạn cần <a routerLink="/login">đăng nhập</a> để gửi đánh giá.
-    </div>
-  </ng-template>
-
-  <hr />
-
+  <!-- Danh sách đánh giá -->
   <div *ngIf="reviews.length > 0; else noReviews">
-    <div *ngFor="let r of reviews" class="review-card p-3 mb-3 border rounded">
-      <h5 class="fw-bold">Vai trò : {{ r.user?.username || 'Người dùng' }}</h5>
-      <p class="text-muted mb-1"> Ngày đánh giá : {{ r.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
-      <p>Nội dung : {{ r.comment }}</p>
+    <div *ngFor="let r of reviews" class="review-item">
+      <div class="review-header">
+        <strong class="review-user">{{ r.username || ('Người dùng #' + r.userId) }}</strong>
+        <span class="review-rating">{{ r.rating }} ⭐</span>
+      </div>
+      <p class="review-comment">{{ r.comment }}</p>
+      <div class="review-footer">
+        <span class="review-date">{{ r.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        <div>
+          <button class="btn btn-sm btn-outline-primary me-2" (click)="editReview(r)">Sửa</button>
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteReview(r.id!)">Xóa</button>
+        </div>
+      </div>
     </div>
   </div>
 

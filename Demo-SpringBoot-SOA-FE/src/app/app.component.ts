@@ -1,19 +1,18 @@
-import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, CommonModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  imports: [CommonModule, RouterModule],
 })
 export class AppComponent {
-  constructor(private router: Router) {}
+  router = inject(Router);
 
-isHomePage(): boolean {
-  return this.router.url === '/home' ;
-}
-
+  isHomePage(): boolean {
+    return this.router.url === '/' || this.router.url === '/home';
+  }
 }

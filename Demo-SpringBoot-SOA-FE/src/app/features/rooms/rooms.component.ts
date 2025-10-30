@@ -1,39 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
-import { NgFor } from '@angular/common';
+import { Router } from '@angular/router';
+import { NgFor, NgIf } from '@angular/common';
 import { RoomService } from '../../shared/services/room.service';
 
 @Component({
   selector: 'app-rooms',
   standalone: true,
-  imports: [CommonModule, NgFor],
+  imports: [CommonModule, NgFor, NgIf],
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.css']
 })
 export class RoomsComponent implements OnInit {
   rooms: any[] = [];
+  isLoading = false;
 
   constructor(
     private service: RoomService,
-    private router: Router
+    public router: Router
   ) {}
 
   ngOnInit(): void {
     this.loadRooms();
   }
-loadRooms() {
-  this.service.getAll().subscribe({
-    next: (data) => {
-      console.log('Rooms loaded:', data);
-      this.rooms = data;
-    },
-    error: (err) => {
-      console.error('❌ Lỗi API:', err);
-      alert('Không thể tải danh sách phòng!');
-    }
-  });
-}
+
+  goBack() {
+    this.router.navigate(['/']);
+  }
+
+  loadRooms() {
+    this.isLoading = true;
+    this.service.getAll().subscribe({
+      next: (data) => {
+        console.log('✅ Rooms loaded:', data);
+        this.rooms = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('❌ Lỗi API:', err);
+        alert('Không thể tải danh sách phòng!');
+        this.isLoading = false;
+      }
+    });
+  }
 
   addRoom() {
     this.router.navigate(['/rooms/add']);
@@ -51,7 +60,7 @@ loadRooms() {
           this.loadRooms();
         },
         error: (err) => {
-          console.error('Lỗi khi xóa phòng:', err);
+          console.error('⚠️ Lỗi khi xóa phòng:', err);
           alert('Không thể xóa phòng!');
         }
       });

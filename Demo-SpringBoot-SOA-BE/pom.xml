@@ -19,7 +19,7 @@
     <description>Run multiple Spring Boot services (User, Room, Review) from same project</description>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
     </properties>
 
 
