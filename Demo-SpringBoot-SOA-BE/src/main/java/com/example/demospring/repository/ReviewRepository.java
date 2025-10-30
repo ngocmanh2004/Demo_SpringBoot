@@ -1,8 +1,7 @@
-package com.example.review_service.repository;
+package com.example.demospring.repository;
 
-import com.example.review_service.model.Review;
+import com.example.demospring.model.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {

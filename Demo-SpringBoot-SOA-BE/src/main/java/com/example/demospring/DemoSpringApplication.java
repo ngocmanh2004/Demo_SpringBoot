@@ -1,11 +1,11 @@
-package com.example.review_service;
+package com.example.demospring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ReviewServiceApplication {
+public class DemoSpringApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ReviewServiceApplication.class, args);
+        SpringApplication.run(DemoSpringApplication.class, args);
     }
 }

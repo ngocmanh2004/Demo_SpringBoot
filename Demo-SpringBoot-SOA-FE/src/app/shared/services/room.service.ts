@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RoomService {
-  private apiUrl = 'http://localhost:8082/api/rooms';
+  private apiUrl = 'http://localhost:8080/api/rooms';
 
   constructor(private http: HttpClient) {}
 
@@ -22,11 +22,14 @@ export class RoomService {
     return this.http.post<any>(this.apiUrl, room);
   }
 
-  update(room: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${room.id}`, room);
+  update(idOrRoom: any, room?: any): Observable<any> {
+    if (typeof idOrRoom === 'object') {
+      return this.http.put<any>(`${this.apiUrl}/${idOrRoom.id}`, idOrRoom);
+    }
+    return this.http.put<any>(`${this.apiUrl}/${idOrRoom}`, room);
   }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
