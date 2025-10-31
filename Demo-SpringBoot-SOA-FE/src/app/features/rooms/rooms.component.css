@@ -1,95 +1,74 @@
 .container {
-  max-width: 1000px;
-  margin: 50px auto;
+  max-width: 1100px;
+  margin: 40px auto;
   background: #ffffff;
-  padding: 35px 40px;
-  border-radius: 14px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  animation: fadeInUp 0.7s ease;
 }
 
-/* Tiêu đề */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 h3 {
   text-align: center;
-  font-weight: 700;
-  color: #2d3748;
-  margin-bottom: 20px;
-}
-
-/* Thanh hành động */
-.d-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-/* Nút quay lại */
-.btn-back {
-  border: none;
-  background: none;
-  color: #007bff;
+  color: #2b2b2b;
   font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.2s;
+  margin-bottom: 25px;
 }
 
-.btn-back:hover {
-  color: #0056b3;
-  transform: translateX(-3px);
-}
-
-/* Nút thêm */
-.btn-add {
-  background-color: #007bff;
-  border: none;
-  color: white;
-  font-weight: 500;
-  border-radius: 8px;
-  padding: 6px 14px;
-  transition: all 0.2s;
-}
-
-.btn-add:hover {
-  background-color: #0056b3;
-  transform: scale(1.03);
-}
-
-/* Bảng danh sách */
+/* Bảng */
 .table {
   width: 100%;
   border-collapse: collapse;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: #fafafa;
   font-size: 15px;
+  table-layout: fixed; /* 👈 Cố định độ rộng các cột */
 }
 
-.table th,
-.table td {
-  text-align: center;
+.table th, .table td {
   padding: 12px 10px;
   border-bottom: 1px solid #e5e7eb;
+  text-align: center; /* 👈 Căn giữa đều */
+  vertical-align: middle; /* 👈 Giúp text giữa dòng */
+  word-wrap: break-word;
 }
 
-.table thead {
+.table thead th {
   background-color: #f1f5f9;
-  font-weight: 600;
   color: #333;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
 }
 
 .table tr:hover {
-  background-color: #f8faff;
-  transition: 0.2s;
+  background-color: #f9fbff;
+  transition: background 0.3s ease;
 }
 
-/* Trạng thái phòng */
+/* Cột mô tả - cho phép text xuống dòng và không đẩy lệch */
+.table td:nth-child(6) {
+  text-align: left;
+  padding-left: 15px;
+}
+
+/* Trạng thái */
 .badge {
   padding: 5px 10px;
   border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
-  text-transform: capitalize;
+  display: inline-block;
+  min-width: 90px;
+  text-align: center;
 }
 
 .bg-success {
@@ -109,33 +88,72 @@ h3 {
 
 /* Nút hành động */
 .btn {
+  border: none;
+  padding: 7px 12px;
   border-radius: 8px;
-  padding: 6px 12px;
   font-size: 14px;
-  transition: all 0.2s;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .btn-warning {
   background-color: #ffc107;
   color: #fff;
-  border: none;
 }
 
 .btn-warning:hover {
   background-color: #e0a800;
+  transform: scale(1.05);
 }
 
 .btn-danger {
   background-color: #dc3545;
   color: #fff;
-  border: none;
 }
 
 .btn-danger:hover {
   background-color: #b02a37;
+  transform: scale(1.05);
 }
 
-/* Khi không có dữ liệu */
+/* Nút trên cùng */
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-back:hover {
+  color: #0056b3;
+  transform: translateX(-3px);
+}
+
+.btn-add {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 6px 14px;
+  transition: all 0.2s;
+}
+
+.btn-add:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
+}
+
 .text-muted {
   text-align: center;
   color: #888;

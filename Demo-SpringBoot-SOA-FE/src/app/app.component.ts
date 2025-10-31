@@ -1,18 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './shared/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  imports: [CommonModule, RouterModule],
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  router = inject(Router);
-
-  isHomePage(): boolean {
-    return this.router.url === '/' || this.router.url === '/home';
-  }
+  title = 'Demo Spring Boot SOA';
 }

@@ -23,7 +23,10 @@ export class UsersComponent implements OnInit {
   }
 
   load() {
-    this.service.getAll().subscribe(data => this.users = data);
+    this.service.getAll().subscribe({
+      next: data => this.users = data,
+      error: err => console.error('Lỗi khi tải danh sách user:', err)
+    });
   }
 
   addUser() {
@@ -35,7 +38,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(id: number) {
-    if (confirm('Bạn có chắc muốn xóa user này không?')) {
+    if (confirm('Bạn có chắc muốn xóa người dùng này không?')) {
       this.service.delete(id).subscribe(() => this.load());
     }
   }

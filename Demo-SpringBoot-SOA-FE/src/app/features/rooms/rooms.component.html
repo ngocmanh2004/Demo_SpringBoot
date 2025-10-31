@@ -9,7 +9,6 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Tòa</th>
         <th>Tên phòng</th>
         <th>Giá (VNĐ)</th>
         <th>Diện tích (m²)</th>
@@ -21,7 +20,6 @@
     <tbody>
       <tr *ngFor="let room of rooms">
         <td>{{ room.id }}</td>
-        <td>{{ room.buildingId }}</td>
         <td>{{ room.name }}</td>
         <td>{{ room.price | number }}</td>
         <td>{{ room.area }}</td>

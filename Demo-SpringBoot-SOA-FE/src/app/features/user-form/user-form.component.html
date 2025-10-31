@@ -23,17 +23,11 @@
     </div>
 
     <div class="form-group">
-      <label>Mật khẩu</label>
-      <input type="password" [(ngModel)]="user.password" name="password" required />
-    </div>
-
-
-    <div class="form-group">
       <label>Vai trò</label>
-      <select [(ngModel)]="user.roleId" name="roleId" required>
-        <option [ngValue]="1">Admin</option>
-        <option [ngValue]="2">Chủ trọ</option>
-        <option [ngValue]="3">Người thuê</option>
+      <select [(ngModel)]="user.role" name="role" required>
+        <option value="ADMIN">Admin</option>
+        <option value="LANDLORD">Chủ trọ</option>
+        <option value="TENANT">Người thuê</option>
       </select>
     </div>
 

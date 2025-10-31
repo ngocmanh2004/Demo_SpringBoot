@@ -1,31 +1,28 @@
 package com.example.demospring.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
+    @Column(nullable = false, unique = true)
     private String username;
-    private String password;
+
     private String fullName;
     private String email;
     private String phone;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
-
     @Enumerated(EnumType.STRING)
-    private Status status = Status.ACTIVE;
-
-    public enum Status {
-        ACTIVE, BANNED, PENDING
-    }
+    private Role role;
 }

@@ -13,14 +13,12 @@ import { UserService } from '../../shared/services/user.service';
 })
 export class UserFormComponent implements OnInit {
   user: any = {
-  username: '',
-  fullName: '',
-  email: '',
-  phone: '',
-  password: '',  
-  roleId: 3
-};
-
+    username: '',
+    fullName: '',
+    email: '',
+    phone: '',
+    role: 'TENANT'
+  };
 
   isEdit = false;
 
@@ -38,22 +36,19 @@ export class UserFormComponent implements OnInit {
     }
   }
 
-saveUser() {
-  console.log('🟢 saveUser() called:', this.user);
-
-  if (this.isEdit) {
-    this.service.update(this.user).subscribe(() => {
-      alert('Cập nhật người dùng thành công!');
-      this.router.navigate(['/users']);
-    });
-  } else {
-    this.service.create(this.user).subscribe(() => {
-      alert('Thêm người dùng thành công!');
-      this.router.navigate(['/users']);
-    });
+  saveUser() {
+    if (this.isEdit) {
+      this.service.update(this.user).subscribe(() => {
+        alert('Cập nhật người dùng thành công!');
+        this.router.navigate(['/users']);
+      });
+    } else {
+      this.service.create(this.user).subscribe(() => {
+        alert('Thêm người dùng thành công!');
+        this.router.navigate(['/users']);
+      });
+    }
   }
-}
-
 
   cancel() {
     this.router.navigate(['/users']);

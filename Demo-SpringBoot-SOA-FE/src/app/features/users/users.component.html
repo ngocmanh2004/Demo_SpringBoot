@@ -1,6 +1,6 @@
 <div class="container">
   <div class="header">
-<button class="btn-back" (click)="goBack()">⬅ Quay lại</button>
+    <button class="btn-back" (click)="goBack()">⬅ Quay lại</button>
     <h2>Danh sách người dùng</h2>
     <button class="btn btn-primary" (click)="addUser()">+ Thêm mới</button>
   </div>
@@ -24,11 +24,18 @@
         <td>{{ u.fullName }}</td>
         <td>{{ u.email }}</td>
         <td>{{ u.phone }}</td>
-        <td>{{ u.roleId === 1 ? 'ADMIN' : (u.roleId === 2 ? 'LANDLORD' : 'TENANT') }}</td>
+        <td>
+          <span class="badge" [ngClass]="{
+            'bg-primary': u.role === 'ADMIN',
+            'bg-success': u.role === 'LANDLORD',
+            'bg-secondary': u.role === 'TENANT'
+          }">
+            {{ u.role }}
+          </span>
+        </td>
         <td>
           <button class="btn btn-edit" (click)="editUser(u.id!)">Sửa</button>
           <button class="btn btn-delete" (click)="deleteUser(u.id!)">Xóa</button>
-
         </td>
       </tr>
     </tbody>

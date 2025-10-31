@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { ReviewService, Review } from '../../shared/services/review.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-reviews',
@@ -31,15 +32,20 @@ export class ReviewsComponent implements OnInit {
   }
 
   loadData() {
-  this.reviewApi.getAllReviews().subscribe(reviews => {
+  forkJoin({
+    users: this.reviewApi.getAllUsers(),
+    rooms: this.reviewApi.getAllRooms(),
+    reviews: this.reviewApi.getAllReviews()
+  }).subscribe(({ users, rooms, reviews }) => {
+    this.users = users;
+    this.rooms = rooms;
+
     this.reviews = reviews.map(r => ({
       ...r,
-      username: this.users.find(u => u.id === r.userId)?.username || `#${r.userId}`
+      username: users.find(u => u.id === r.userId)?.username || `#${r.userId}`,
+      roomName: rooms.find(room => room.id === r.roomId)?.name || `#${r.roomId}`
     }));
   });
-
-  this.reviewApi.getAllUsers().subscribe(users => this.users = users);
-  this.reviewApi.getAllRooms().subscribe(rooms => this.rooms = rooms);
 }
 
   goBack() { this.location.back(); }  

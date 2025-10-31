@@ -2,10 +2,7 @@
   <h3>{{ isEdit ? 'Cập nhật phòng' : 'Thêm phòng mới' }}</h3>
 
   <form (ngSubmit)="saveRoom()">
-    <div class="mb-3">
-      <label class="form-label">Tòa</label>
-      <input [(ngModel)]="room.buildingId" name="buildingId" class="form-control" required />
-    </div>
+
 
     <div class="mb-3">
       <label class="form-label">Tên phòng</label>
