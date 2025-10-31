@@ -3,43 +3,35 @@ package com.example.demospring.service;
 import com.example.demospring.model.User;
 import com.example.demospring.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
+    private final UserRepository repo;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService(UserRepository repo) {
+        this.repo = repo;
     }
 
     public List<User> getAll() {
-        return userRepository.findAll();
+        return repo.findAll();
     }
 
-    public User getById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public Optional<User> getById(Long id) {
+        return repo.findById(id);
     }
 
     public User create(User user) {
-        return userRepository.save(user);
+        return repo.save(user);
     }
 
-    public User update(Long id, User updatedUser) {
-        return userRepository.findById(id)
-                .map(existingUser -> {
-                    existingUser.setUsername(updatedUser.getUsername());
-                    existingUser.setFullName(updatedUser.getFullName());
-                    existingUser.setEmail(updatedUser.getEmail());
-                    existingUser.setPhone(updatedUser.getPhone());
-                    existingUser.setRole(updatedUser.getRole());
-                    return userRepository.save(existingUser);
-                })
-                .orElse(null);
+    public User update(Long id, User user) {
+        user.setId(id);
+        return repo.save(user);
     }
 
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        repo.deleteById(id);
     }
 }

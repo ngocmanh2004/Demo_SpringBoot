@@ -13,12 +13,14 @@ import { UserService } from '../../shared/services/user.service';
 })
 export class UserFormComponent implements OnInit {
   user: any = {
-    username: '',
-    fullName: '',
-    email: '',
-    phone: '',
-    role: 'TENANT'
-  };
+  username: '',
+  fullName: '',
+  email: '',
+  phone: '',
+  password: '',  
+  role: 'TENANT'
+};
+
 
   isEdit = false;
 
